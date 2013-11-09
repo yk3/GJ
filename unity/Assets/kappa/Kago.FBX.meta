@@ -1,23 +1,16 @@
 fileFormatVersion: 2
-guid: 86cdb6c11ffdde842aee2e5f3e7e364b
+guid: d2873295f65b7264ba989ff5a998203e
 ModelImporter:
   serializedVersion: 15
   fileIDToRecycleName:
-    100000: Kassya_mdl
-    100002: //RootNode
-    100004: LaneLineEnd_mdl
-    400000: Kassya_mdl
-    400002: //RootNode
-    400004: LaneLineEnd_mdl
+    100000: //RootNode
+    100002: Kassya_mdl
+    400000: //RootNode
+    400002: Kassya_mdl
     2300000: Kassya_mdl
-    2300002: LaneLineEnd_mdl
     3300000: Kassya_mdl
-    3300002: LaneLineEnd_mdl
-    4300000: LaneLineEnd_mdl
-    4300002: Kassya_mdl
-    7400000: LaneEnd
+    4300000: Kassya_mdl
     9500000: //RootNode
-    11100000: //RootNode
   materials:
     importMaterials: 1
     materialName: 0
@@ -25,33 +18,12 @@ ModelImporter:
   animations:
     legacyGenerateAnimations: 4
     bakeSimulation: 0
-    animationCompression: 2
+    animationCompression: 1
     animationRotationError: .5
     animationPositionError: .5
     animationScaleError: .5
     animationWrapMode: 0
-    clipAnimations:
-    - name: LaneEnd
-      takeName: LaneEnd
-      firstFrame: 0
-      lastFrame: 89
-      wrapMode: 2
-      orientationOffsetY: 0
-      level: 0
-      cycleOffset: 0
-      loop: 0
-      loopBlend: 1
-      loopBlendOrientation: 0
-      loopBlendPositionY: 0
-      loopBlendPositionXZ: 0
-      keepOriginalOrientation: 0
-      keepOriginalPositionY: 1
-      keepOriginalPositionXZ: 0
-      heightFromFeet: 0
-      mirror: 0
-      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
-      curves: []
-      transformMask: []
+    clipAnimations: []
     isReadable: 1
   meshes:
     lODScreenPercentages: []
@@ -73,7 +45,7 @@ ModelImporter:
     splitTangentsAcrossUV: 1
     normalImportMode: 0
     tangentImportMode: 1
-  importAnimation: 0
+  importAnimation: 1
   copyAvatar: 0
   humanDescription:
     human: []
@@ -89,5 +61,5 @@ ModelImporter:
     rootMotionBoneName: 
   lastHumanDescriptionAvatarSource: {instanceID: 0}
   additionalBone: 1
-  animationType: 0
+  animationType: 2
   userData: 
