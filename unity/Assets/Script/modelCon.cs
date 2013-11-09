@@ -24,9 +24,7 @@ public class modelCon : MonoBehaviour {
 				LaneEndFlg = true;
 			}
 		}	
-		else{
 		transform.Translate(-Vector3.forward * Time.deltaTime * m_Speed);
-		}
 		
 		if (LaneEndFlg){
 			transform.Translate(Vector3.down * Time.deltaTime * m_DownSpeed);
