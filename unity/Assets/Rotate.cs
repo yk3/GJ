@@ -26,6 +26,12 @@ public class Rotate : MonoBehaviour {
 
 			}
 		*/
-		Debug.Log("hitss");
+		if (col.gameObject.tag == "Model") {
+			Debug.Log("atari");
+			transform.parent = col.gameObject.transform;
+		}
+		
+		
+		
 	}
 }

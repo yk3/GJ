@@ -14,6 +14,6 @@ public class trigger_test : MonoBehaviour {
 	}
 	
 	void OnTriggerEnter(Collider col) {
-    	Debug.Log("Enter!");
+    	Debug.Log("juns!");
 	}
 }
