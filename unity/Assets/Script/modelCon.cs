@@ -8,6 +8,7 @@ public class modelCon : MonoBehaviour {
 	public float m_Speed = 1;
 	public float m_DownSpeed = 8;
 	private bool LaneEndFlg = false;
+	private bool LaneGoalFlg = false;
 	
 	// Use this for initialization
 	void Start () {
@@ -23,6 +24,9 @@ public class modelCon : MonoBehaviour {
 			if (hit.transform.gameObject.tag == "LaneEnd"){
 				LaneEndFlg = true;
 			}
+			if (hit.transform.gameObject.tag == "Goal"){
+				LaneGoalFlg = true;
+			}
 		}	
 		transform.Translate(-Vector3.forward * Time.deltaTime * m_Speed);
 		
@@ -32,6 +36,9 @@ public class modelCon : MonoBehaviour {
 			{
 				Destroy(gameObject);
 			}
+		}
+		if (LaneGoalFlg){
+				Destroy(gameObject);
 		}
 	}
 	
