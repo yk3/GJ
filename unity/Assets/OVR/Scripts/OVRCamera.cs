@@ -1,4 +1,4 @@
-/************************************************************************************
+﻿/************************************************************************************
 
 Filename    :   OVRCamera.cs
 Content     :   Interface to camera class
@@ -47,10 +47,10 @@ public class OVRCamera : OVRComponent
 	// camera position...	
 	// From root of camera to neck (translation only)
 	[HideInInspector]
-	public Vector3 NeckPosition = new Vector3(0.0f, 1.0f,  0.0f);	
+	public Vector3 NeckPosition = new Vector3(0.0f, 0.0f,  0.0f);	
 	// From neck to eye (rotation and translation; x will be different for each eye)
 	[HideInInspector]
-	public Vector3 EyePosition  = new Vector3(0.0f, 1.09f, 0.16f);
+	public Vector3 EyePosition  = new Vector3(0.0f, 0.09f, 0.16f);
 	
 	// STATIC MEMBERS
 	// We will grab the actual orientation that is used by the cameras in a shared location.
