@@ -37,6 +37,7 @@ public class Title : MonoBehaviour {
 	{
 			yield return new WaitForSeconds(5);
 			Debug.Log("GameStart");
+			Application.LoadLevel("main");
 	}
 	
 }
