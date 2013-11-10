@@ -9,12 +9,15 @@ public class playerManager : MonoBehaviour {
 	private bool endFlag = false;
 	
 	public GameObject CamCon;
+	public GameObject CamConR;
 	private float timer;
 	
 	private GameObject[] kagos;
+	private GameObject[] kagos2;
 	private GameObject[] sekkin;
 	private string[] sekkinmuki;
 	private string muki;
+	private string mukiCam;
 	
 	private int j;
 	
@@ -31,7 +34,7 @@ public class playerManager : MonoBehaviour {
 		if (endFlag == false){
 //		timer -= Time.deltaTime;
 //		if (timer < 0) {
-		if (changeFlag == false) {
+//		if (changeFlag == false) {
 			kagos = GameObject.FindGameObjectsWithTag("Model");
 			j = 0;
 			sekkin = null;
@@ -58,15 +61,25 @@ public class playerManager : MonoBehaviour {
 				
 				
 //				Debug.Log ("tikai___" + j);
-				muki = mukiflag(CamCon);
-	Debug.Log("Cam__" + muki);
+	Debug.Log("Cam__" + mukiCam);
 				sekkinmuki = new string[j];
 				if (sekkin != null){
 					for(j = 0 ; j < sekkin.Length ; j++)
 					{
 						sekkinmuki[j] = mukiflag(sekkin[j]);
 	Debug.Log("kago__"+j+"_" + sekkinmuki[j]);
-						if(muki == sekkinmuki[j]){
+							
+			kagos2 = GameObject.FindGameObjectsWithTag("Model");
+				for (int i = 0 ; i < kagos2.Length ; i++){
+					if (Vector3.Distance(transform.position, kagos2[i].transform.position) < 0.1f)
+					{
+						CamConR = kagos2[i];
+					}
+				}
+							
+							
+						mukiCam = mukiflag2(CamConR,CamCon);
+						if(mukiCam == sekkinmuki[j]){
 							transform.rotation = sekkin[j].transform.rotation;
 							transform.position = sekkin[j].transform.position;
 							transform.parent = sekkin[j].transform;
@@ -74,27 +87,26 @@ public class playerManager : MonoBehaviour {
 							Debug.Log("changeFlag_Out");
 						}
 					}
-					if (changeFlag == false){
+/*					if (changeFlag == false){
 						Debug.Log("_tigau!!");
 							transform.parent = null;
-						this.rigidbody.AddForce(new Vector3(0,-1000,0));
-						
+						endFlag = true;
 					}
-					
+*/
 				}
-			}
+//			}
 		}
 	}
 	else{
 		this.transform.position = new Vector3(0,-1,0);
 	}
-		if (transform.position.y < -200){
-			Application.LoadLevel("title");
-		}
+	if (transform.position.y < -50){
+		Application.LoadLevel("title");
 	}
+}
 	
 	string mukiflag(GameObject obj){
-		Debug.Log(obj.transform.localRotation.y);
+//		Debug.Log(obj.transform.localRotation.y);
 		string mukiA ="";
 		if (-0.25 < obj.transform.localRotation.y && obj.transform.localRotation.y < 0.25)
 		{
@@ -113,6 +125,52 @@ public class playerManager : MonoBehaviour {
 			mukiA = "hidari";
 		}
 		
+		Debug.Log(mukiA);
+		return mukiA;
+	}
+	string mukiflag2(GameObject obj,GameObject Cam){
+		
+		float renY = Cam.transform.localRotation.y;
+		
+/*		if (obj != null){
+			if (obj.transform.localRotation.y < 0.4f && obj.transform.localRotation.y < 0.6f){
+			renY = Cam.transform.localRotation.y - 0.5f;
+			}
+			if (obj.transform.localRotation.y < -0.6f && obj.transform.localRotation.y < -0.4f){
+			renY = Cam.transform.localRotation.y + 0.5f;
+			}
+			if (obj.transform.localRotation.y < -1.1f && obj.transform.localRotation.y < -0.9f){
+			renY = Cam.transform.localRotation.y +1f;
+			}
+			if (obj.transform.localRotation.y < 9.9f && obj.transform.localRotation.y < 1.1f){
+			renY = Cam.transform.localRotation.y - 1f;
+			}
+		}
+		*/
+		renY = Cam.transform.localRotation.y - obj.transform.localRotation.y;
+		if (renY > 1){renY = renY -1;}
+		if (renY < 0){renY = renY +1;}
+		Debug.Log(renY);
+		
+		string mukiA ="";
+		if (-0.25 < renY && renY < 0.25)
+		{
+			mukiA = "mae";
+		}
+		if (0.25 < renY && renY < 0.75)
+		{
+			mukiA = "rigi";
+		}
+		if (0.75 < renY || renY < -0.75)
+		{
+			mukiA = "usiro";
+		}
+		if (-0.75 < renY && renY < -0.25)
+		{
+			mukiA = "hidari";
+		}
+		
+		Debug.Log(mukiA);
 		return mukiA;
 	}
 	
