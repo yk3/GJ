@@ -180,7 +180,7 @@ Transform:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 100008}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: 0, y: -1, z: 0, w: 4.13663059e-07}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
@@ -489,9 +489,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ipd: .064000003
   verticalFOV: 90
-  CameraRootPosition: {x: 0, y: 1, z: 0}
-  NeckPosition: {x: 0, y: .699999988, z: 0}
-  EyeCenterPosition: {x: 0, y: .150000006, z: .0900000036}
+  CameraRootPosition: {x: 0, y: 0, z: 0}
+  NeckPosition: {x: 0, y: 0, z: 0}
+  EyeCenterPosition: {x: 0, y: 0, z: 0}
   UsePlayerEyeHeight: 0
   FollowOrientation: {fileID: 0}
   TrackerRotatesY: 1
@@ -502,7 +502,7 @@ MonoBehaviour:
   WireMode: 0
   LensCorrection: 1
   Chromatic: 1
-  backgroundColor: {r: .433823526, g: .433823526, b: .433823526, a: 1}
+  backgroundColor: {r: 0, g: 0, b: 0, a: 1}
   nearClipPlane: .150000006
   farClipPlane: 1000
 --- !u!114 &11400016
