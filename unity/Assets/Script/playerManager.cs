@@ -4,19 +4,19 @@ using System.Collections;
 public class playerManager : MonoBehaviour {
 	
 	private Quaternion Rot = Quaternion.Euler(0, 90, 0);
-//	private bool parentFlag = false;
 	private bool changeFlag = false;
 	private bool endFlag = false;
 	
 	public GameObject CamCon;
-	public GameObject CamConR;
+	public GameObject OyaMdel;
+	public GameObject NextKag;
+
 	private float timer;
 	
 	private GameObject[] kagos;
-	private GameObject[] kagos2;
 	private GameObject[] sekkin;
-	private string[] sekkinmuki;
-	private string muki;
+
+	private string Nextmuki;
 	private string mukiCam;
 	
 	private int j;
@@ -31,170 +31,133 @@ public class playerManager : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-		if (endFlag == false){
-//		timer -= Time.deltaTime;
+	if (endFlag == false){
+	timer -= Time.deltaTime;
 //		if (timer < 0) {
 //		if (changeFlag == false) {
-			kagos = GameObject.FindGameObjectsWithTag("Model");
-			j = 0;
-			sekkin = null;
-			if (kagos != null){
+
+		//かごを全て取得;
+		kagos = GameObject.FindGameObjectsWithTag("Model");
+		j = 0;
+		sekkin = null;		//接近かごのリストを入れる配列を初期化;
+
+		if (kagos != null){
 //				Debug.Log( kagos.Length);
-				for (int i = 0 ; i < kagos.Length ; i++){
-					if (Vector3.Distance(transform.position, kagos[i].transform.position) < 0.5f)
-					{
-						j++;
-					}
+			for (int i = 0 ; i < kagos.Length ; i++){		//近いかごの数を取得;
+				if (Vector3.Distance(transform.position, kagos[i].transform.position) < 0.2f)
+				{
+					j++;
 				}
-				Debug.Log("Countj__" + j);
-				sekkin = new GameObject[j];
-				j=0;
-				for (int i = 0 ; i < kagos.Length ; i++){
-					if (Vector3.Distance(transform.position, kagos[i].transform.position) < 0.5f)
+			}
+			
+			sekkin = new GameObject[j];		//近いかごの数だけ配列を作成;
+
+			j=0;
+			for (int i = 0 ; i < kagos.Length ; i++){
+				if (Vector3.Distance(transform.position, kagos[i].transform.position) < 0.2f)
+				{
+					if (Vector3.Distance(transform.position, kagos[i].transform.position) < 0.1f)
 					{
-						sekkin[j] = kagos[i];
-//						Debug.Log ("_" + sekkin[j]);
-//						Debug.Log ("_" + kagos[i]);
-						j++;
+						OyaMdel = kagos[i];	//親のかごを取得;
 					}
+					sekkin[j] = kagos[i];
+					
+					if (OyaMdel.transform.localRotation.y != kagos[i].transform.localRotation.y) {
+						NextKag = kagos[i];		//近いかごの中で向きが親かごと違うものを取得;
+					}
+					j++;
 				}
-				
-				
-//				Debug.Log ("tikai___" + j);
-	Debug.Log("Cam__" + mukiCam);
-				sekkinmuki = new string[j];
-				if (sekkin != null){
-					for(j = 0 ; j < sekkin.Length ; j++)
-					{
-						sekkinmuki[j] = mukiflag(sekkin[j]);
-	Debug.Log("kago__"+j+"_" + sekkinmuki[j]);
-							
-			kagos2 = GameObject.FindGameObjectsWithTag("Model");
-				for (int i = 0 ; i < kagos2.Length ; i++){
-					if (Vector3.Distance(transform.position, kagos2[i].transform.position) < 0.1f)
-					{
-						CamConR = kagos2[i];
-					}
+			}
+		mukiCam = mukiflag(CamCon);		//カメラの向いている向きを取得;
+//乗り換える処理;
+			if (NextKag != null){
+				Nextmuki = mukiflag(NextKag);
+				if (Nextmuki == mukiCam){	//向きが同じ場合;
+//					transform.rotation = NextKag.transform.rotation;
+					transform.position = NextKag.transform.position;
+					transform.parent = NextKag.transform;
+					changeFlag = true;	//かごに乗ったらもう使わない処理;
 				}
-							
-							
-						mukiCam = mukiflag2(CamConR,CamCon);
-						if(mukiCam == sekkinmuki[j]){
-							transform.rotation = sekkin[j].transform.rotation;
-							transform.position = sekkin[j].transform.position;
-							transform.parent = sekkin[j].transform;
-							changeFlag = true;
-							Debug.Log("changeFlag_Out");
-						}
-					}
-/*					if (changeFlag == false){
-						Debug.Log("_tigau!!");
-							transform.parent = null;
-						endFlag = true;
-					}
+			}
+			else{
+				if (OyaMdel != null){
+					transform.position = OyaMdel.transform.position;
+					transform.parent = OyaMdel.transform;
+					changeFlag = true;	//かごに乗ったらもう使わない処理;
+				}
+			}
+/*
+//向きが違った時に落ちる処理フラグを建てる;
+		if (NextKag != OyaMdel && NextKag != OyaMdel){
+			Debug.Log("_tigau!!");
+			transform.parent = null;
+			endFlag = true;
+		}
 */
-				}
-//			}
 		}
 	}
-	else{
+	if (endFlag == true){		//落下処理;
 		this.transform.position = new Vector3(0,-1,0);
 	}
-	if (transform.position.y < -50){
+	if (transform.position.y < -20){		//死亡処理　タイトルに戻す;
 		Application.LoadLevel("title");
 	}
 }
 	
 	string mukiflag(GameObject obj){
-//		Debug.Log(obj.transform.localRotation.y);
-		string mukiA ="";
-		if (-0.25 < obj.transform.localRotation.y && obj.transform.localRotation.y < 0.25)
-		{
-			mukiA = "mae";
-		}
-		if (0.25 < obj.transform.localRotation.y && obj.transform.localRotation.y < 0.75)
-		{
-			mukiA = "rigi";
-		}
-		if (0.75 < obj.transform.localRotation.y || obj.transform.localRotation.y < -0.75)
-		{
-			mukiA = "usiro";
-		}
-		if (-0.75 < obj.transform.localRotation.y && obj.transform.localRotation.y < -0.25)
-		{
-			mukiA = "hidari";
-		}
-		
-		Debug.Log(mukiA);
-		return mukiA;
-	}
-	string mukiflag2(GameObject obj,GameObject Cam){
-		
-		float renY = Cam.transform.localRotation.y;
-		
-/*		if (obj != null){
-			if (obj.transform.localRotation.y < 0.4f && obj.transform.localRotation.y < 0.6f){
-			renY = Cam.transform.localRotation.y - 0.5f;
-			}
-			if (obj.transform.localRotation.y < -0.6f && obj.transform.localRotation.y < -0.4f){
-			renY = Cam.transform.localRotation.y + 0.5f;
-			}
-			if (obj.transform.localRotation.y < -1.1f && obj.transform.localRotation.y < -0.9f){
-			renY = Cam.transform.localRotation.y +1f;
-			}
-			if (obj.transform.localRotation.y < 9.9f && obj.transform.localRotation.y < 1.1f){
-			renY = Cam.transform.localRotation.y - 1f;
-			}
-		}
-		*/
-		renY = Cam.transform.localRotation.y - obj.transform.localRotation.y;
+		float renY = 0;
+		renY = obj.transform.localRotation.y;
 		if (renY > 1){renY = renY -1;}
-		if (renY < 0){renY = renY +1;}
-		Debug.Log(renY);
-		
+		if (renY < -1){renY = renY +1;}
+//Debug.Log(renY);
 		string mukiA ="";
 		if (-0.25 < renY && renY < 0.25)
 		{
-			mukiA = "mae";
+			mukiA = "Mae";
 		}
 		if (0.25 < renY && renY < 0.75)
 		{
-			mukiA = "rigi";
+			mukiA = "Migi";
 		}
 		if (0.75 < renY || renY < -0.75)
 		{
-			mukiA = "usiro";
+			mukiA = "Usiro";
 		}
 		if (-0.75 < renY && renY < -0.25)
 		{
-			mukiA = "hidari";
+			mukiA = "Hidari";
 		}
 		
-		Debug.Log(mukiA);
 		return mukiA;
 	}
-	
+
 /*
 	void OnTriggerEnter(Collider col) {
-//Debug.Log("OnTriggerEnter_Check__" + col.name);
-		if (col.gameObject.tag == "Model" && changeFlag == false && parentFlag == false){
+		if (col.gameObject.tag == "Model" && changeFlag == false){
 			transform.rotation = col.gameObject.transform.rotation;
 			transform.position = col.gameObject.transform.position;
 			transform.parent = col.gameObject.transform;
-			changeFlag = true;
-			parentFlag = true;
-		} 
+			changeFlag = true;	//かごに乗ったらもう使わない処理;
+		}
 	}
 */
 	
 	void OnTriggerStay(Collider cols) {
 		if (cols.gameObject.tag == "Close") {
-			Debug.Log("testes__" + cols.gameObject.tag);
 			changeFlag = false;
 		}
 		if (cols.gameObject.tag == "Goal") {
-//			Debug.Log("Goal!!!!!!");
 			Application.LoadLevel("title");
 		}
 	}
+//デバッグ表示;
+	
+	private void OnGUI()
+	{
+		GUILayout.Label("mukiCam__" + mukiCam);
+		GUILayout.Label("Nextmuki__" + Nextmuki);
+		GUILayout.Label("CamCon__" + CamCon.transform.localRotation.y);
+	}
+
+	
 }
